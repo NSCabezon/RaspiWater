@@ -22,6 +22,11 @@ public func configure(_ app: Application) async throws {
 
     app.views.use(.leaf)
 
+#if os(OSX)
+    app.http.server.configuration.hostname = "nostromo.local"
+#else
+    app.http.server.configuration.hostname = "raspi.local"
+#endif
 
     // register routes
     try routes(app)
