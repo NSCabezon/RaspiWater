@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>#(title)</title>
+</head>
+
+<body>
+  <h1>#(title)</h1>
+    <form action="/gopio" method="post">
+      <label for="timesToBlink">Veces que parpadeará:</label><br>
+      <input type="number" id="timesToBlink" name="timesToBlink" required><br>
+      <label for="ledName">Nombre del LED:</label><br>
+      <input type="text" id="ledName" name="ledName" required><br>
+      <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
