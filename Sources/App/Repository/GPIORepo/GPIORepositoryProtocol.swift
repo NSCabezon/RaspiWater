@@ -1,6 +1,6 @@
 import Foundation
 
-protocol GPIORepositoryProtocol: Sendable {
+protocol GPIORepositoryProtocol {
     func getValue(ofPin pin: Pin) -> GPIOValue
     func getAllPinValues() -> [PinValue]
     func set(pinValue: PinValue)

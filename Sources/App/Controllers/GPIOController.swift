@@ -14,8 +14,8 @@ struct GPIOController: RouteCollection {
         gpioRoutes.post(use: { try await self.blinkLed(req: $0) })
     }
     
-    func index(req: Request) async throws -> [[String: Int]] {
-        gpioRepository.getAllPinValues().map { [$0.pin.rawValue: $0.value.rawValue] }
+    func index(req: Request) async throws -> [PinValue] {
+        gpioRepository.getAllPinValues()
     }
 
     func blinkLed(req: Request) async throws -> HTTPStatus {

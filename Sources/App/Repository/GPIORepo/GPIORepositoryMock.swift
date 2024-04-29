@@ -1,36 +1,37 @@
 import Foundation
 
-final class GPIORepositoryMock: GPIORepositoryProtocol, Sendable {
+final class GPIORepositoryMock: GPIORepositoryProtocol {
     
-    private var values = [String: Int]()
+    private var values: [PinValue] = [
+        .init(pin: .P1, value: .off),
+        .init(pin: .P3, value: .on),
+        .init(pin: .P22, value: .on)
+    ]
     
     func getAllPinValues() -> [PinValue] {
-        values.compactMap { (key: String, value: Int) in
-            guard let pin = Pin(rawValue: key),
-                  let gpio = GPIOValue(rawValue: value) else {
-                return nil
-            }
-            return PinValue(pin: pin, value: gpio)
-        }
+        values
     }
     
     func getValue(ofPin pin: Pin) -> GPIOValue {
-        guard let value = values[pin.rawValue],
-        let valueToReturn = GPIOValue(rawValue: value) else {
-            let randomValue = [GPIOValue.off, GPIOValue.on].randomElement()!
-            values[pin.rawValue] = randomValue.rawValue
-            return randomValue
+        guard let result = values.first(where: { $0.pin == pin }) else {
+            return GPIOValue.off
         }
-        return valueToReturn
+        return result.value
     }
     
     func set(pinValue: PinValue) {
-        values[pinValue.pin.rawValue] = pinValue.value.rawValue
+        guard let index = values.firstIndex(where: { $0.pin == pinValue.pin }) else {
+            return
+        }
+        values[index] = pinValue
     }
     
     func blink(pin: Pin, times: Int) throws {
         if !times.isMultiple(of: 2) {
-            values[pin.rawValue] = values[pin.rawValue] == 1 ? 0 : 1
+            guard let index = values.firstIndex(where: { $0.pin == pin }) else {
+                return
+            }
+            values[index].value = values[index].value == .on ? .off : .on
         }
     }
 }

@@ -22,6 +22,6 @@ func routes(_ app: Application) throws {
     repository = GPIORepository()
     #endif
     
-    try app.register(collection: TodoController())
+//    try app.register(collection: TodoController())
     try app.register(collection: GPIOController(gpioRepository: repository))
 }
