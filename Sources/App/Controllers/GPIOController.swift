@@ -8,7 +8,7 @@ struct GPIOController: RouteCollection {
     }
     
     func boot(routes: RoutesBuilder) throws {
-        let gpioRoutes = routes.grouped("gopio")
+        let gpioRoutes = routes.grouped("gopios")
 
         gpioRoutes.get(use: { try await self.index(req: $0) })
         gpioRoutes.post(use: { try await self.blinkLed(req: $0) })

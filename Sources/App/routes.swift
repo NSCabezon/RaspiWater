@@ -14,14 +14,18 @@ func routes(_ app: Application) throws {
         "Hello, world!"
     }
     
-    let repository: GPIORepositoryProtocol
+    let gpioRepository: GPIORepositoryProtocol
+    let sensorsRepository: SensorsRepositoryProtocol
     
     #if os(OSX)
-    repository = GPIORepositoryMock()
+    gpioRepository = GPIORepositoryMock()
+    sensorsRepository = SensorsRepositoryMock()
     #else
-    repository = GPIORepository()
+    gpioRepository = GPIORepository()
+    sensorsRepository = SensorsRepository()
     #endif
     
 //    try app.register(collection: TodoController())
-    try app.register(collection: GPIOController(gpioRepository: repository))
+    try app.register(collection: GPIOController(gpioRepository: gpioRepository))
+    try app.register(collection: SensorController(sensorsRepository: sensorsRepository))
 }
