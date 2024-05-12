@@ -7,8 +7,7 @@ struct SensorsRepository: SensorsRepositoryProtocol {
         let path = "/sys/bus/iio/devices/iio:device0/in_voltage\(sensorIndex)-voltage1_raw"
 
         do {
-            let contents = try String(contentsOfFile: path, encoding: .utf8)
-            print(contents)
+            let contents = try String(contentsOfFile: path, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines)
             return Float(contents) ?? -1
         } catch let error as NSError {
             print("Ooops! Something went wrong: \(error)")
