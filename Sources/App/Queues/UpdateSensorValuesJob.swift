@@ -17,15 +17,20 @@ struct UpdateSensorValuesJob: AsyncScheduledJob {
     func run(context: QueueContext) async throws {
         // Do some work here, perhaps queue up another job.
         let terraces = sensorsRepository.getSensorsStatus()
-        debugPrint(terraces)
         
         let db = context.application.db
         
         let sensors = terraces.flatMap { $0.sensors }
         
         let date = Date()
-        let sensorsDB = sensors.map { SensorReading(name: $0.name, value: $0.value, timestamp: date) }
-        
-        try await sensorsDB.create(on: db)
+        for sensorToAdd in sensors {
+            let sensorId = sensorToAdd.sensorId
+            guard let sensor = try await Sensor.find(sensorId, on: db) else {
+                debugPrint("Sensor with id: \(sensorId) not found")
+                continue
+            }
+            let sensorReading = SensorReading(value: sensorToAdd.value, timestamp: date)
+            try await sensor.$readings.create(sensorReading, on: db)
+        }
     }
 }

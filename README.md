@@ -70,6 +70,13 @@ list tables
 ```
 
 Query from table:
+
 ```bash
 SELECT * FROM "sensor_reading";
+```
+
+Delete database:
+
+```bash
+DROP DATABASE raspiwater;
 ```

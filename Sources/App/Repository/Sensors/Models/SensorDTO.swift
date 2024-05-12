@@ -1,7 +1,7 @@
 import Foundation
 import Vapor
 
-struct Sensor: Content {
-    let name: String
+struct SensorDTO: Content {
+    let sensorId: UUID
     let value: Float
 }

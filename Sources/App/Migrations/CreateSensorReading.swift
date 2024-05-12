@@ -1,10 +1,10 @@
 import Fluent
 
-struct CreateSensorValue: AsyncMigration {
+struct CreateSensorReading: AsyncMigration {
     func prepare(on database: Database) async throws {
         try await database.schema(SensorReading.schema)
             .id()
-            .field("name", .string, .required)
+            .field("sensor_id", .uuid, .required, .references("sensor", "id"))
             .field("value", .float, .required)
             .field("timestamp", .datetime, .required)
             .create()

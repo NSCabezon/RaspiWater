@@ -3,5 +3,5 @@ import Vapor
 
 struct Terrace: Content {
     let name: String
-    let sensors: [Sensor]
+    let sensors: [SensorDTO]
 }

@@ -24,7 +24,8 @@ public func configure(_ app: Application) async throws {
     
     // MARK: - Migrations
     
-    app.migrations.add(CreateSensorValue(), to: .psql)
+    app.migrations.add(CreateSensor(), to: .psql)
+    app.migrations.add(CreateSensorReading(), to: .psql)
 
     app.views.use(.leaf)
 

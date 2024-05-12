@@ -6,9 +6,9 @@ final class SensorReading: Model, Content, Sendable {
     
     @ID(key: .id)
     var id: UUID?
-
-    @Field(key: "name")
-    var name: String
+    
+    @Parent(key: "sensor_id")
+    var sensor: Sensor
     
     @Field(key: "value")
     var value: Float
@@ -20,12 +20,10 @@ final class SensorReading: Model, Content, Sendable {
 
     init(
         id: UUID? = nil,
-        name: String,
         value: Float,
         timestamp: Date
     ) {
         self.id = id
-        self.name = name
         self.value = value
         self.timestamp = timestamp
     }

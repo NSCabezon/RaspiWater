@@ -2,7 +2,10 @@ import Queues
 import QueuesDatabaseHooks
 import Vapor
 
+
 func queues(_ app: Application) throws {
+    let debugging = false
+    
     app.migrations.add(QueueDatabaseEntryMigration())
     app.queues.add(QueuesDatabaseNotificationHook.default(db: app.db))
     
@@ -16,9 +19,15 @@ func queues(_ app: Application) throws {
     
     let updateSensorValuesJob = UpdateSensorValuesJob(sensorsRepository: sensorsRepository)
     
-    app.queues.schedule(updateSensorValuesJob)
-        .hourly()
-        .at(.init(integerLiteral: 00))
+    if debugging {
+        app.queues.schedule(updateSensorValuesJob)
+            .minutely()
+            .at(.init(integerLiteral: 30))
+    } else {
+        app.queues.schedule(updateSensorValuesJob)
+            .hourly()
+            .at(.init(integerLiteral: 00))
+    }
     
     try app.queues.startScheduledJobs()
 }
