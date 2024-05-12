@@ -32,5 +32,6 @@ struct UpdateSensorValuesJob: AsyncScheduledJob {
             let sensorReading = SensorReading(value: sensorToAdd.value, timestamp: date)
             try await sensor.$readings.create(sensorReading, on: db)
         }
+        debugPrint("Update sensor values job run.")
     }
 }
