@@ -8,17 +8,23 @@ import Vapor
 public func configure(_ app: Application) async throws {
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    
+    // MARK: - Configure DB
 
-    app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
+    let postgresConfig = SQLPostgresConfiguration(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber,
-        username: Environment.get("DATABASE_USERNAME") ?? "vapor_username",
+        username: Environment.get("DATABASE_USERNAME") ?? "raspiwater",
         password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
         database: Environment.get("DATABASE_NAME") ?? "vapor_database",
-        tls: .prefer(try .init(configuration: .clientDefault)))
-    ), as: .psql)
-
-    app.migrations.add(CreateTodo())
+        tls: .prefer(try .init(configuration: .clientDefault))
+    )
+    
+    app.databases.use(.postgres(configuration: postgresConfig), as: .psql)
+    
+    // MARK: - Migrations
+    
+    app.migrations.add(CreateSensorValue(), to: .psql)
 
     app.views.use(.leaf)
 
@@ -27,7 +33,12 @@ public func configure(_ app: Application) async throws {
 #else
     app.http.server.configuration.hostname = "raspi.local"
 #endif
+    
+    // register queues
+    try queues(app)
 
     // register routes
     try routes(app)
+    
+    try await app.autoMigrate()
 }

@@ -5,13 +5,9 @@ func routes(_ app: Application) throws {
     app.get { req async throws in
         try await req.view.render("index", ["title": "Hello Vapor!"])
     }
-    
+
     app.get("blink") { req async throws in
         try await req.view.render("blink", ["title": "Make that LED blink!"])
-    }
-
-    app.get("hello") { req async -> String in
-        "Hello, world!"
     }
     
     let gpioRepository: GPIORepositoryProtocol
@@ -28,4 +24,5 @@ func routes(_ app: Application) throws {
 //    try app.register(collection: TodoController())
     try app.register(collection: GPIOController(gpioRepository: gpioRepository))
     try app.register(collection: SensorController(sensorsRepository: sensorsRepository))
+    try app.register(collection: SensorReadingsController())
 }

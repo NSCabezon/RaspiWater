@@ -1,6 +1,6 @@
 import Vapor
 
-struct SensorController: RouteCollection {
+struct SensorController: RouteCollection, Sendable {
     private let sensorsRepository: SensorsRepositoryProtocol
     
     init(sensorsRepository: SensorsRepositoryProtocol) {

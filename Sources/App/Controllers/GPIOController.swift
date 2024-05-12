@@ -1,6 +1,6 @@
 import Vapor
 
-struct GPIOController: RouteCollection {
+struct GPIOController: RouteCollection, Sendable {
     private let gpioRepository: GPIORepositoryProtocol
     
     init(gpioRepository: GPIORepositoryProtocol) {

@@ -1,5 +1,5 @@
 {
-  "originHash" : "0e2e1a1d0666e8517905ec4dced88a222b588fcd86f98e6d4a98c8deb8e7a6d7",
+  "originHash" : "2fa62fbcc6504309ec50d928bd35b105bf6195a3cab786fa06594ee3e8ab99e2",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent-postgres-driver.git",
       "state" : {
-        "revision" : "a538fc647f82d915eb84e0a12ca9b08c513e57c4",
-        "version" : "2.8.0"
+        "revision" : "2cc10e86a743c66cd60082174f602e3c223543dc",
+        "version" : "2.9.0"
       }
     },
     {
@@ -98,6 +98,24 @@
       "state" : {
         "revision" : "e345cbb9cf6052b37b27c0c4f976134fc01dbe15",
         "version" : "1.21.1"
+      }
+    },
+    {
+      "identity" : "queues",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/queues",
+      "state" : {
+        "revision" : "3dc80954c672effa188d01a15f56bf358c34beac",
+        "version" : "1.13.0"
+      }
+    },
+    {
+      "identity" : "queues-database-hooks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor-community/queues-database-hooks",
+      "state" : {
+        "revision" : "edae74c5896fd303ae04ebfa44eb8d605a64f17a",
+        "version" : "0.3.0"
       }
     },
     {
@@ -276,8 +294,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
-        "revision" : "e5cb0abdadff95ef996fafd6268f2f5f8cba6325",
-        "version" : "4.94.1"
+        "revision" : "840d87c19530e1481caa3e450808b13b2dc06bd3",
+        "version" : "4.99.0"
       }
     },
     {

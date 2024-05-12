@@ -1,5 +1,5 @@
 import Foundation
 
-protocol SensorsRepositoryProtocol {
+protocol SensorsRepositoryProtocol: Sendable {
     func getSensorsStatus() -> [Terrace]
 }
