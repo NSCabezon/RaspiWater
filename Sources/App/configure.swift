@@ -10,14 +10,24 @@ public func configure(_ app: Application) async throws {
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
     // MARK: - Configure DB
-
+    let host = Environment.get("DATABASE_HOST") ?? "localhost"
+    let port = Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber
+    let username = Environment.get("DATABASE_USERNAME") ?? "raspiwater"
+    let password = Environment.get("DATABASE_PASSWORD") ?? "vapor_password"
+    let database = Environment.get("DATABASE_NAME") ?? "vapor_database"
+    debugPrint(host)
+    debugPrint(port)
+    debugPrint(username)
+    debugPrint(password)
+    debugPrint(database)
+    
     let postgresConfig = SQLPostgresConfiguration(
-        hostname: Environment.get("DATABASE_HOST") ?? "localhost",
-        port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber,
-        username: Environment.get("DATABASE_USERNAME") ?? "raspiwater",
-        password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
-        database: Environment.get("DATABASE_NAME") ?? "vapor_database",
-        tls: .prefer(try .init(configuration: .clientDefault))
+        hostname: host,
+        port: port,
+        username: username,
+        password: password,
+        database: database,
+        tls: .disable//.prefer(try .init(configuration: .clientDefault))
     )
     
     app.databases.use(.postgres(configuration: postgresConfig), as: .psql)

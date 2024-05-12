@@ -1,6 +1,10 @@
 import Foundation
 
 struct SensorsRepositoryMock: SensorsRepositoryProtocol {
+    func getSensor(sensorIndex: Int) -> Float {
+        1504
+    }
+    
     func getSensorsStatus() -> [Terrace] {
         [
             .init(

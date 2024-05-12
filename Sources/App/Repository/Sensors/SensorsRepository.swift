@@ -2,6 +2,20 @@ import Foundation
 import SwiftyGPIO
 
 struct SensorsRepository: SensorsRepositoryProtocol {
+    func getSensor(sensorIndex: Int) -> Float {
+        // Set the file path
+        let path = "/sys/bus/iio/devices/iio:device0/in_voltage\(sensorIndex)-voltage1_raw"
+
+        do {
+            let contents = try String(contentsOfFile: path, encoding: .utf8)
+            print(contents)
+            return Float(contents) ?? -1
+        } catch let error as NSError {
+            print("Ooops! Something went wrong: \(error)")
+        }
+        return -1
+    }
+    
     func getSensorsStatus() -> [Terrace] {
         let gpios = SwiftyGPIO.GPIOs(for: .RaspberryPi4)
         
