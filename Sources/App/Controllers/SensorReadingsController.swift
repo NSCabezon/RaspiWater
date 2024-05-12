@@ -2,14 +2,34 @@ import Fluent
 import Vapor
 
 struct SensorReadingsController: RouteCollection {
+    private let sensorsRepository: SensorsRepositoryProtocol
+    
+    init(sensorsRepository: SensorsRepositoryProtocol) {
+        self.sensorsRepository = sensorsRepository
+    }
+    
     func boot(routes: RoutesBuilder) throws {
         let sensorValues = routes.grouped("sensorreadings")
 
         sensorValues.get(use: { try await self.getAll(req: $0) })
+        
         sensorValues.group(":sensorID") { sensorReading in
             sensorReading.get(use: { try await self.getValuesFromOneSensor(req: $0) })
             sensorReading.delete(use: { try await self.delete(req: $0) })
         }
+        
+        let sensorIndex = sensorValues.grouped("index")
+        sensorIndex.group(":index") { idx in
+            idx.get(use: { try await self.getSingleReading(req: $0) })
+        }
+    }
+    
+    func getSingleReading(req: Request) async throws -> SingleReading {
+        guard let index = req.parameters.get("index", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        let value = sensorsRepository.getSensor(sensorIndex: index)
+        return SingleReading(value: value)
     }
     
     func getAll(req: Request) async throws -> [SensorReadingDTO] {

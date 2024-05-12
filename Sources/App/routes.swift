@@ -23,5 +23,5 @@ func routes(_ app: Application) throws {
 
     try app.register(collection: GPIOController(gpioRepository: gpioRepository))
     try app.register(collection: SensorsController())
-    try app.register(collection: SensorReadingsController())
+    try app.register(collection: SensorReadingsController(sensorsRepository: sensorsRepository))
 }
