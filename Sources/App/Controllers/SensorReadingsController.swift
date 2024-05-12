@@ -12,8 +12,9 @@ struct SensorReadingsController: RouteCollection {
         }
     }
     
-    func getAll(req: Request) async throws -> [SensorReading] {
-        try await SensorReading.query(on: req.db).all()
+    func getAll(req: Request) async throws -> [SensorReadingDTO] {
+        let readings = try await SensorReading.query(on: req.db).with(\.$sensor).all()
+        return readings.map { $0.toReadingDTO(withSensorId: true) }
     }
     
     func getValuesFromOneSensor(req: Request) async throws -> [SensorReadingDTO] {
