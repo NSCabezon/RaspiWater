@@ -20,8 +20,7 @@ func routes(_ app: Application) throws {
     gpioRepository = GPIORepository()
     sensorsRepository = SensorsRepository()
     #endif
-    
-//    try app.register(collection: TodoController())
+
     try app.register(collection: GPIOController(gpioRepository: gpioRepository))
     try app.register(collection: SensorsController())
     try app.register(collection: SensorReadingsController())

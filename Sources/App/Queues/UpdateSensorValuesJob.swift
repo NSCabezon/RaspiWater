@@ -2,14 +2,6 @@ import Queues
 import QueuesDatabaseHooks
 import Vapor
 
-struct AsyncCleanupJob: AsyncScheduledJob {
-    // Add extra services here via dependency injection, if you need them.
-
-    func run(context: QueueContext) async throws {
-        // Do some work here, perhaps queue up another job.
-    }
-}
-
 struct UpdateSensorValuesJob: AsyncScheduledJob {
     // Add extra services here via dependency injection, if you need them.
     let sensorsRepository: SensorsRepositoryProtocol
